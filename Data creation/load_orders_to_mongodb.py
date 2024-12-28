@@ -3,7 +3,7 @@ from faker import Faker
 import random
 import json
 
-with open("config.json", "r") as config_file:
+with open("../config.json", "r") as config_file:
     config = json.load(config_file)
 
 connection_string = config["mongodb_connection_string"]

@@ -1,6 +1,6 @@
-from extract_orders_from_mongodb import extract_orders
-from transform_orders import transform_orders
-from process_orders import load_transformed_orders
+from ETL.extract_orders_from_mongodb import extract_orders
+from ETL.transform_orders import transform_orders
+from ETL.process_orders import load_transformed_orders
 
 def main():
     print("Extraktion...")
