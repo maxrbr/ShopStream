@@ -1,8 +1,12 @@
-from ETL.extract_orders_from_mongodb import extract_orders
-from ETL.transform_orders import transform_orders
-from ETL.process_orders import load_transformed_orders
+from etl.extract_orders_from_mongodb import extract_orders
+from etl.transform_orders import transform_orders
+from etl.process_orders import load_transformed_orders
+from analytics.analyse_orders import run_analysis
 
+# Hauptprogramm: Steuerung des etl-Prozesses und der Analyse
 def main():
+    # etl-Prozess
+    print("etl-Prozess starten...")
     print("Extraktion...")
     orders = extract_orders()
     print(f"{len(orders)} Bestellungen extrahiert.")
@@ -14,6 +18,9 @@ def main():
     print("Laden...")
     load_transformed_orders(transformed_orders)
     print("Daten erfolgreich geladen!")
+
+    # Analyse durchführen
+    run_analysis()
 
 if __name__ == "__main__":
     main()
