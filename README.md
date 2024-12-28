@@ -24,21 +24,6 @@ python main.py
 
 The project will fetch data from various sources and store it in a MongoDB database for further analysis.
 
-## Contributing
-
-We welcome contributions! If you would like to contribute, please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch:
-   ```bash
-   git checkout -b feature-name
-   ```
-3. Make your changes and submit a pull request.
-
-## License
-
-This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
-
 ## Acknowledgments
 
 - MongoDB for database management
