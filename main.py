@@ -3,7 +3,6 @@ from transform_orders import transform_orders
 from process_orders import load_transformed_orders
 
 def main():
-    # ETL-Prozess
     print("Extraktion...")
     orders = extract_orders()
     print(f"{len(orders)} Bestellungen extrahiert.")
