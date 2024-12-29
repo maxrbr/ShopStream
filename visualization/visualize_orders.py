@@ -4,7 +4,7 @@ from collections import Counter
 import json
 
 def get_database():
-    with open("../config.json", "r") as config_file:
+    with open("config.json", "r") as config_file:
         config = json.load(config_file)
     client = MongoClient(config["mongodb_connection_string"])
     return client["shopstream"]
