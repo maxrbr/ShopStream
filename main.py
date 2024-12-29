@@ -5,27 +5,39 @@ from analytics.analyse_orders import run_analysis
 from visualization.visualize_orders import run_visualization
 
 
-# Hauptprogramm: Steuerung des etl-Prozesses und der Analyse
 def main():
-    # etl-Prozess
-    print("etl-Prozess starten...")
-    print("Extraktion...")
-    orders = extract_orders()
-    print(f"{len(orders)} Bestellungen extrahiert.")
+    try:
+        # etl-Prozess
+        print("etl-Prozess starten...")
 
-    print("Transformation...")
-    transformed_orders = transform_orders(orders)
-    print(f"{len(transformed_orders)} Bestellungen transformiert.")
+        # Extraktion
+        print("Extraktion...")
+        orders = extract_orders()
+        if not orders:
+            raise ValueError("Keine Daten in der Datenbank gefunden. Der ETL-Prozess wird abgebrochen.")
+        print(f"{len(orders)} Bestellungen extrahiert.")
 
-    print("Laden...")
-    load_transformed_orders(transformed_orders)
-    print("Daten erfolgreich geladen!")
+        # Transformation
+        print("Transformation...")
+        transformed_orders = transform_orders(orders)
+        print(f"{len(transformed_orders)} Bestellungen transformiert.")
 
-    # Analyse durchführen
-    run_analysis()
+        # Laden
+        print("Laden...")
+        load_transformed_orders(transformed_orders)
+        print("Daten erfolgreich geladen!")
 
-    #Visualisierung erstellen
-    run_visualization()
+        # Analyse
+        run_analysis()
+
+        # Visualisierung
+        run_visualization()
+
+    except ValueError as ve:
+        print(f"Fehler: {ve}")
+    except Exception as e:
+        print(f"Ein unerwarteter Fehler ist aufgetreten: {e}")
+
 
 if __name__ == "__main__":
     main()
