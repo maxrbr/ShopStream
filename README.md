@@ -1,6 +1,6 @@
 # ShopStream
 
-ShopStream is an end-to-end data pipeline for analyzing e-commerce data. The project collects, stores, and analyzes sales data from various sources to gain business insights.
+ShopStream is an end-to-end data pipeline for analyzing e-commerce data. The project collects, stores, and analyzes sales data from a MongoDB source to gain business insights.
 
 ## Installation
 
