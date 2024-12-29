@@ -75,5 +75,7 @@ def run_analysis():
         print(f"{month}: {rate:.2f}%")
     print("Analyse abgeschlossen.")
 
+    return cancellation_rate
+
 if __name__ == "__main__":
     run_analysis()
