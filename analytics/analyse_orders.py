@@ -1,8 +1,9 @@
 import json
-from pymongo import MongoClient
-from collections import Counter
 
-# Verbindung zur MongoDB herstellen
+from datetime import datetime
+from pymongo import MongoClient
+from collections import Counter, defaultdict
+
 def get_database():
     with open("config.json", "r") as config_file:
         config = json.load(config_file)
@@ -11,7 +12,6 @@ def get_database():
     client = MongoClient(connection_string)
     return client["shopstream"]
 
-# Durchschnittlicher Bestellwert berechnen
 def calculate_average_order_value():
     db = get_database()
     processed_orders_collection = db["processed_orders"]
@@ -20,7 +20,6 @@ def calculate_average_order_value():
     average_order_value = total_revenue / len(orders) if orders else 0
     print(f"Durchschnittlicher Bestellwert: {average_order_value:.2f}")
 
-# Meistverkaufte Produkte analysieren
 def most_sold_products():
     db = get_database()
     processed_orders_collection = db["processed_orders"]
@@ -31,7 +30,6 @@ def most_sold_products():
     for product, count in most_sold:
         print(f"{product}: {count} Verkäufe")
 
-# Umsatz pro Kunde berechnen
 def revenue_per_customer():
     db = get_database()
     processed_orders_collection = db["processed_orders"]
@@ -44,12 +42,37 @@ def revenue_per_customer():
     for customer, revenue in customer_revenue.items():
         print(f"{customer}: {revenue:.2f} EUR")
 
-# Funktion zum Starten aller Analysen
+
+def calculate_cancellation_rate():
+    db = get_database()
+    processed_orders_collection = db["processed_orders"]
+    orders = list(processed_orders_collection.find())
+
+    monthly_data = defaultdict(lambda: {"total": 0, "cancelled": 0})
+    for order in orders:
+        order_date = datetime.strptime(order["order_date"], "%Y-%m-%d")
+        month = order_date.strftime("%Y-%m")
+        monthly_data[month]["total"] += 1
+        if order["status"] == "cancelled":
+            monthly_data[month]["cancelled"] += 1
+
+    cancellation_rate = {
+        month: (data["cancelled"] / data["total"]) * 100 if data["total"] > 0 else 0
+        for month, data in monthly_data.items()
+    }
+
+    return dict(sorted(cancellation_rate.items()))
+
 def run_analysis():
     print("Analyse starten...")
     calculate_average_order_value()
     most_sold_products()
     revenue_per_customer()
+    print("Starte Analyse der Rücklaufquote...")
+    cancellation_rate = calculate_cancellation_rate()
+    print("Rücklaufquote pro Monat:")
+    for month, rate in cancellation_rate.items():
+        print(f"{month}: {rate:.2f}%")
     print("Analyse abgeschlossen.")
 
 if __name__ == "__main__":

@@ -12,7 +12,7 @@ def transform_orders(orders):
             "quantity": order["quantity"],
             "price": order["price"],
             "total_price": round(total_price, 2),
-            "status": "completed" if total_price > 100 else "pending",
+            "status": order.get("status") if total_price > 100 else "pending",
             "order_date": datetime.fromisoformat(order["order_date"]).strftime("%Y-%m-%d"),
         }
         transformed_orders.append(transformed_order)

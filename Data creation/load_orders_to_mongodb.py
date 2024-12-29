@@ -25,7 +25,8 @@ def generate_order_data(num_orders):
             "product": faker.word(ext_word_list=["Laptop", "Smartphone", "Tablet", "Headphones"]),
             "quantity": random.randint(1, 5),
             "price": round(random.uniform(50, 500), 2),
-            "order_date": faker.date_time_this_year().isoformat()
+            "order_date": faker.date_time_this_year().isoformat(),
+            "status": random.choices(["completed", "cancelled"], weights=[70, 30], k=1)[0]
         }
         orders.append(order)
     return orders
