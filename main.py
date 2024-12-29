@@ -28,10 +28,10 @@ def main():
         print("Daten erfolgreich geladen!")
 
         # Analyse
-        run_analysis()
+        cancellation_rate = run_analysis()
 
         # Visualisierung
-        run_visualization()
+        run_visualization(cancellation_rate)
 
     except ValueError as ve:
         print(f"Fehler: {ve}")
