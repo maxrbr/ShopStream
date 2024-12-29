@@ -2,6 +2,8 @@ from etl.extract_orders_from_mongodb import extract_orders
 from etl.transform_orders import transform_orders
 from etl.process_orders import load_transformed_orders
 from analytics.analyse_orders import run_analysis
+from visualization.visualize_orders import run_visualization
+
 
 # Hauptprogramm: Steuerung des etl-Prozesses und der Analyse
 def main():
@@ -21,6 +23,9 @@ def main():
 
     # Analyse durchführen
     run_analysis()
+
+    #Visualisierung erstellen
+    run_visualization()
 
 if __name__ == "__main__":
     main()
